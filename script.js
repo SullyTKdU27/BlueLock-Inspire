@@ -169,42 +169,31 @@ function updateCareerStats() {
 
     // Display trophies
     const trophies = gameState.career.trophies || [];
-    const trophyList = trophies.length > 0 ? trophies.join(", ") : "None";
-    document.getElementById('careerTrophies').textContent = trophyList;
-
     const trophyContainer = document.getElementById('careerTrophies');
     trophyContainer.innerHTML = '';
-    trophies.forEach(trophy => {
-        const trophyIcon = document.createElement('img');
-        trophyIcon.src = `images/${trophy.replace(/\s+/g, '_').toLowerCase()}.png`; // Example: league_title.png
-        trophyIcon.alt = trophy;
-        trophyIcon.title = trophy;
-        trophyIcon.style.width = '30px';
-        trophyIcon.style.marginRight = '5px';
-        trophyContainer.appendChild(trophyIcon);
-    });
+    
+    if (trophies.length === 0) {
+        trophyContainer.textContent = "None";
+    } else {
+        trophies.forEach(trophy => {
+            const trophyIcon = document.createElement('img');
+            trophyIcon.src = `images/${trophy.replace(/\s+/g, '_').toLowerCase()}.png`; // Example: league_title.png
+            trophyIcon.alt = trophy;
+            trophyIcon.title = trophy;
+            trophyIcon.style.width = '30px';
+            trophyIcon.style.marginRight = '5px';
+            trophyContainer.appendChild(trophyIcon);
+        });
+    }
 
+    // Fix match history display by always initializing it
+    if (!gameState.career.matchHistory) {
+        gameState.career.matchHistory = [];
+    }
+
+    // Display match history
     matchHistoryBody.innerHTML = '';
     gameState.career.matchHistory.slice().reverse().forEach(match => {
-        const row = document.createElement('tr');
-        row.innerHTML = `
-            <td>${match.week}</td>
-            <td>${match.season}</td>
-            <td>${match.opponent}</td>
-            <td>${match.result}</td>
-            <td>${match.goals}</td>
-            <td>${match.assists}</td>
-        `;
-        matchHistoryBody.appendChild(row);
-    });
-
-    const matchHistory = gameState.career.matchHistory || []; // Ensure matchHistory is defined
-    const recentMatches = matchHistory.slice(-5); // Get the last 5 matches
-
-    const matchHistoryBody = document.getElementById('matchHistoryBody');
-    matchHistoryBody.innerHTML = '';
-
-    recentMatches.forEach(match => {
         const row = document.createElement('tr');
         row.innerHTML = `
             <td>${match.week}</td>
@@ -329,14 +318,15 @@ function populateOpponents() {
 }
 
 function simulateMatch(opponent) {
-    const selectedOpponentClub = gameState.league.clubs.find(club => club.name === opponent);
-
-    if (selectedOpponentClub && selectedOpponentClub.matchesPlayed >= 5) {
+    // Check if this opponent has been played 5 times already this season
+    const opponentMatches = gameState.career.matchHistory.filter(
+        match => match.opponent === opponent && match.season === gameState.career.season
+    ).length;
+    
+    if (opponentMatches >= 5) {
         showNotification(`You cannot play against ${opponent} more than 5 times in a season!`);
         return null;
     }
-
-    selectedOpponentClub.matchesPlayed++;
 
     if (gameState.career.matchPlayedThisWeek) {
         showNotification('You can only play one match per week!');
@@ -432,18 +422,26 @@ function simulateMatch(opponent) {
     // Update the UI
     updateGameInfo();
 
-    // Create match record
+    // Create match record with proper result format
+    const result = playerClubGoals > opponentGoals 
+        ? 'W ' + playerClubGoals + '-' + opponentGoals 
+        : playerClubGoals < opponentGoals 
+        ? 'L ' + playerClubGoals + '-' + opponentGoals 
+        : 'D ' + playerClubGoals + '-' + opponentGoals;
+        
     const matchRecord = {
         season: gameState.career.season,
         week: gameState.career.week,
         opponent: opponent,
-        playerClub: gameState.player.club,
-        playerGoals: playerClubGoals,
-        opponentGoals: opponentGoals,
+        result: result,
         goals: playerGoals,
         assists: playerAssists
     };
 
+    // Add match to history
+    if (!gameState.career.matchHistory) {
+        gameState.career.matchHistory = [];
+    }
     gameState.career.matchHistory.push(matchRecord);
 
     // Simulate other matches
@@ -563,7 +561,11 @@ function generateMatchHighlights(matchResult) {
 }
 
 function advanceWeek() {
-    if (gameState.career.week < 25) {
+    // Check if we're at the end of the season
+    if (gameState.career.week === 25) {
+        // Check for trophies
+        checkForTrophies();
+    } else if (gameState.career.week < 25) {
         // Advance the week
         gameState.career.week += 1;
 
@@ -584,6 +586,7 @@ function advanceWeek() {
 
         showNotification(`Week advanced! Energy restored by ${energyRestored}. Market value updated.`);
     } else {
+        // This shouldn't happen with proper trophy checking but just in case
         showNotification('The season has ended!');
     }
 }
@@ -701,6 +704,38 @@ function forceContractOffer() {
         updateGameInfo();
     } else {
         showNotification('You rejected the contract offer.');
+    }
+}
+
+function checkForTrophies() {
+    // Check if the league has ended (week 25)
+    if (gameState.career.week === 25) {
+        // Sort clubs by points to find the champion
+        const sortedClubs = [...gameState.league.clubs].sort((a, b) => {
+            if (a.points !== b.points) return b.points - a.points;
+            const aGD = a.goalsFor - a.goalsAgainst;
+            const bGD = b.goalsFor - b.goalsAgainst;
+            if (aGD !== bGD) return bGD - aGD;
+            return b.goalsFor - a.goalsFor;
+        });
+        
+        // Check if player's club is the champion
+        if (sortedClubs[0].name === gameState.player.club) {
+            // Initialize trophies array if it doesn't exist
+            if (!gameState.career.trophies) {
+                gameState.career.trophies = [];
+            }
+            
+            // Add the league title trophy
+            const trophy = `Season ${gameState.career.season} League Title`;
+            gameState.career.trophies.push(trophy);
+            
+            // Show a notification
+            showNotification(`Congratulations! ${gameState.player.club} has won the league!`);
+        }
+        
+        // Reset league for next season
+        resetLeagueForNewSeason();
     }
 }
 
