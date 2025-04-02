@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blue Lock Inspire: Rise to Glory</title>
+    <link rel="stylesheet" href="styles.css"> <!-- Link to the CSS file -->
+</head>
+<body>
+    <div class="container">
+        <h1>Blue Lock Inspire: Rise to Glory</h1>
+        
+        <!-- Start Screen -->
+        <div id="startScreen" class="section active">
+            <h2>Welcome to Blue Lock Inspire</h2>
+            <p>Embark on an exciting journey to become a football legend. Train, compete, and rise to glory!</p>
+            <div class="button-container">
+                <button id="newGameBtn">New Game</button>
+                <button id="loadGameBtn">Load Game</button>
+            </div>
+        </div>
+        
+        <!-- Character Creation -->
+        <div id="characterCreation" class="section">
+            <h2>Create Your Player</h2>
+            <div class="stats">
+                <div class="stat-item">
+                    <label for="playerName">Name:</label>
+                    <input type="text" id="playerName" value="Isagi Yoichi" class="input-field">
+                </div>
+            </div>
+            
+            <h3>Select Your Club</h3>
+            <div class="club-selection">
+                <div class="club-option" data-club="Bayern Munich">Bayern Munich</div>
+                <div class="club-option" data-club="Juventus">Juventus</div>
+                <div class="club-option" data-club="Manchester City">Manchester City</div>
+                <div class="club-option" data-club="Manchester United">Manchester United</div>
+                <div class="club-option" data-club="PSG">PSG</div>
+                <div class="club-option" data-club="Barcelona">Barcelona</div>
+            </div>
+            
+            <div class="button-container">
+                <button id="startCareerBtn" disabled>Start Career</button>
+            </div>
+        </div>
+        
+        <!-- Main Game Screen -->
+        <div id="mainGame" class="section">
+            <!-- Player Info Section -->
+            <div class="info-box">
+                <h3>Player: <span id="playerNameDisplay">Isagi Yoichi</span></h3>
+                <h3>Energy: <span id="energyValue">1000</span>/1000</h3>
+                <div class="progress-bar">
+                    <div id="energyBar" class="progress" style="width: 100%;"></div>
+                </div>
+            </div>
+
+            <!-- Club, Season, Week, and Market Value Section -->
+            <div class="info-box">
+                <p>Current Club: <span id="currentClub"></span></p>
+                <p>Season: <span id="currentSeason">1</span></p>
+                <p>Week: <span id="currentWeek">1</span></p>
+                <p>Market Value: <span id="marketValueDisplay">€1,000,000</span></p>
+                <p>Season Progress: <span id="seasonProgress">1/25 weeks completed</span></p>
+            </div>
+
+            <!-- Player Stats Section -->
+            <div class="info-box">
+                <h3>Player Stats</h3>
+                <div id="playerStats">
+                    <div class="stat-item">
+                        <span>Shooting:</span>
+                        <div class="progress-bar">
+                            <div id="shootingBar" class="progress" style="width: 0%;"></div>
+                        </div>
+                        <span id="shootingValue">0/99</span>
+                    </div>
+                    <div class="stat-item">
+                        <span>Passing:</span>
+                        <div class="progress-bar">
+                            <div id="passingBar" class="progress" style="width: 0%;"></div>
+                        </div>
+                        <span id="passingValue">0/99</span>
+                    </div>
+                    <div class="stat-item">
+                        <span>Defense:</span>
+                        <div class="progress-bar">
+                            <div id="defenseBar" class="progress" style="width: 0%;"></div>
+                        </div>
+                        <span id="defenseValue">0/99</span>
+                    </div>
+                    <div class="stat-item">
+                        <span>Speed:</span>
+                        <div class="progress-bar">
+                            <div id="speedBar" class="progress" style="width: 0%;"></div>
+                        </div>
+                        <span id="speedValue">0/99</span>
+                    </div>
+                    <div class="stat-item">
+                        <span>Stamina:</span>
+                        <div class="progress-bar">
+                            <div id="staminaBar" class="progress" style="width: 0%;"></div>
+                        </div>
+                        <span id="staminaValue">0/99</span>
+                    </div>
+                    <div class="stat-item">
+                        <span>Luck:</span>
+                        <div class="progress-bar">
+                            <div id="luckBar" class="progress" style="width: 0%;"></div>
+                        </div>
+                        <span id="luckValue">0/99</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Buttons Section -->
+            <div class="button-container">
+                <button id="trainingBtn">Training</button>
+                <button id="matchBtn">Play Match</button>
+                <button id="leagueTableBtn">League Table</button>
+                <button id="careerStatsBtn">Career Stats</button>
+                <button id="nextWeekBtn">Next Week</button>
+                <button id="saveGameBtn">Save Game</button>
+            </div>
+
+            <!-- Cheat Code Section -->
+            <div class="cheat-container">
+                <input type="text" id="cheatCode" placeholder="Enter cheat code" class="cheat-input">
+                <button id="applyCheatBtn">Apply</button>
+            </div>
+        </div>
+        
+        <!-- Training Screen -->
+        <div id="trainingScreen" class="section">
+            <h2>Training</h2>
+            <p>Choose a training drill to improve your skills:</p>
+            
+            <div class="button-container">
+                <button class="training-option" data-cost="10" data-type="shooting">Shooting Practice (10 Energy)</button>
+                <button class="training-option" data-cost="10" data-type="passing">Passing Drills (10 Energy)</button>
+                <button class="training-option" data-cost="10" data-type="defense">Defensive Training (10 Energy)</button>
+                <button class="training-option" data-cost="10" data-type="speed">Speed Training (10 Energy)</button>
+                <button class="training-option" data-cost="10" data-type="stamina">Stamina Building (10 Energy)</button>
+                <button class="training-option" data-cost="20" data-type="double">Double Intensity Training (20 Energy)</button>
+                <button class="training-option" data-cost="100" data-type="hardcore">Hardcore Training (100 Energy)</button>
+                <button class="training-option" data-cost="500" data-type="luck">Luck Training (500 Energy)</button>
+            </div>
+            
+            <div id="trainingResult" style="margin-top: 20px;"></div>
+            
+            <div class="button-container">
+                <button id="backFromTrainingBtn">Back</button>
+            </div>
+        </div>
+        
+        <!-- Match Screen -->
+        <div id="matchScreen" class="section">
+            <h2>Match</h2>
+            <p>Select an opponent to play against:</p>
+            
+            <div id="opponentSelection" class="club-selection">
+                <!-- Opponents will be populated by JavaScript -->
+            </div>
+            
+            <div class="button-container">
+                <button id="startMatchBtn" disabled>Start Match (100 Energy)</button>
+                <button id="backFromMatchBtn">Back</button>
+            </div>
+        </div>
+        
+        <!-- Match Simulation -->
+        <div id="matchSimulation" class="section">
+            <h2>Match Simulation</h2>
+            <div id="matchDetails" class="match-result">
+                <!-- Match details will be populated by JavaScript -->
+            </div>
+            
+            <div id="matchHighlights">
+                <!-- Match highlights will be populated by JavaScript -->
+            </div>
+            
+            <div class="button-container">
+                <button id="continueAfterMatchBtn">Continue</button>
+            </div>
+        </div>
+        
+        <!-- League Table -->
+        <div id="leagueTableScreen" class="section">
+            <h2>League Table</h2>
+            <table class="league-table">
+                <thead>
+                    <tr>
+                        <th>Position</th>
+                        <th>Club</th>
+                        <th>Played</th>
+                        <th>Won</th>
+                        <th>Drawn</th>
+                        <th>Lost</th>
+                        <th>GF</th>
+                        <th>GA</th>
+                        <th>GD</th>
+                        <th>Points</th>
+                    </tr>
+                </thead>
+                <tbody id="leagueTableBody">
+                    <!-- League table will be populated by JavaScript -->
+                </tbody>
+            </table>
+            
+            <div class="button-container">
+                <button id="backFromLeagueBtn">Back</button>
+            </div>
+        </div>
+        
+        <!-- Career Stats -->
+        <div id="careerStatsScreen" class="section">
+            <h2>Career Statistics</h2>
+            
+            <div class="stats">
+                <div class="stat-item">
+                    <span>Games Played:</span>
+                    <span id="careerGamesPlayed">0</span>
+                </div>
+                <div class="stat-item">
+                    <span>Goals Scored:</span>
+                    <span id="careerGoals">0</span>
+                </div>
+                <div class="stat-item">
+                    <span>Assists:</span>
+                    <span id="careerAssists">0</span>
+                </div>
+                <div class="stat-item">
+                    <span>Market Value:</span>
+                    <span id="marketValue">€100,000</span>
+                </div>
+                <div class="stat-item">
+                    <span>Trophies:</span>
+                    <div id="careerTrophies">
+                        <!-- Trophy icons will be added here -->
+                    </div>
+                </div>
+            </div>
+            
+            <h3>Career Match History</h3>
+            <table class="player-stats-table">
+                <thead>
+                    <tr>
+                        <th>Week</th>
+                        <th>Season</th>
+                        <th>Opponent</th>
+                        <th>Result</th>
+                        <th>Goals</th>
+                        <th>Assists</th>
+                    </tr>
+                </thead>
+                <tbody id="matchHistoryBody">
+                    <!-- Match history will be populated by JavaScript -->
+                </tbody>
+            </table>
+            
+            <div class="button-container">
+                <button id="backFromCareerBtn">Back</button>
+            </div>
+        </div>
+    </div>
+    
+    <div id="notification" class="notification"></div>
+    
+    <script src="script.js"></script> <!-- Link to the JavaScript file -->
+</body>
+</html>

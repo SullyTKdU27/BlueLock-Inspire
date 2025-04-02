@@ -1,0 +1,343 @@
+/* General Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+    background: linear-gradient(135deg, #0b2f4c, #144272);
+    color: white;
+    min-height: 100vh;
+    padding: 20px;
+}
+
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: rgba(0, 0, 0, 0.6);
+    border-radius: 10px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+}
+
+/* Headings */
+h1, h2, h3 {
+    text-align: center;
+    margin-bottom: 20px;
+    color: #4cc9f0;
+}
+
+h1 {
+    font-size: 2.5em;
+    text-shadow: 0 0 10px rgba(76, 201, 240, 0.5);
+}
+
+/* Buttons */
+.button-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+    margin: 20px 0;
+}
+
+button {
+    background-color: #205295;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all 0.3s;
+    font-weight: bold;
+}
+
+button:hover {
+    background-color: #4cc9f0;
+    transform: translateY(-2px);
+}
+
+button:disabled {
+    background-color: #555;
+    cursor: not-allowed;
+    transform: none;
+}
+
+/* Sections */
+.section {
+    margin-bottom: 20px;
+    display: none;
+}
+
+.active {
+    display: block;
+}
+
+/* Stats */
+.stats {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.stat-item {
+    background-color: rgba(32, 82, 149, 0.6);
+    padding: 10px;
+    border-radius: 5px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.stat-item span {
+    width: 80px;
+    text-align: left;
+}
+
+/* Progress bar container */
+.progress-bar {
+    width: 100%;
+    height: 20px;
+    background-color: #e0e0e0;
+    border-radius: 10px;
+    overflow: hidden;
+    margin: 5px 0;
+}
+
+/* Progress bar fill */
+.progress {
+    height: 100%;
+    background-color: #4caf50; /* Green color for progress */
+    width: 0%; /* Default width */
+    transition: width 0.3s ease; /* Smooth transition */
+}
+
+/* Club Selection */
+.club-selection {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 15px;
+}
+
+.club-option {
+    background-color: rgba(32, 82, 149, 0.6);
+    padding: 15px;
+    border-radius: 5px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.club-option:hover {
+    background-color: rgba(76, 201, 240, 0.6);
+    transform: translateY(-5px);
+}
+
+.club-option.selected {
+    background-color: #4cc9f0;
+    box-shadow: 0 0 10px rgba(76, 201, 240, 0.8);
+}
+
+/* Energy Display */
+.energy-display {
+    text-align: center;
+    margin-bottom: 15px;
+}
+
+/* Match Result */
+.match-result {
+    background-color: rgba(32, 82, 149, 0.6);
+    padding: 20px;
+    border-radius: 5px;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+/* Match Highlight */
+.match-highlight {
+    margin: 10px 0;
+    padding: 10px;
+    background-color: rgba(0, 0, 0, 0.3);
+    border-radius: 5px;
+}
+
+/* League Table */
+.league-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+}
+
+.league-table th, .league-table td {
+    padding: 10px;
+    text-align: center;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.league-table th {
+    background-color: rgba(32, 82, 149, 0.8);
+}
+
+.league-table tr:nth-child(even) {
+    background-color: rgba(32, 82, 149, 0.4);
+}
+
+.league-table tr:hover {
+    background-color: rgba(76, 201, 240, 0.3);
+}
+
+/* Player Stats Table */
+.player-stats-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+}
+
+.player-stats-table th, .player-stats-table td {
+    padding: 8px;
+    text-align: center;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.player-stats-table th {
+    background-color: rgba(32, 82, 149, 0.8);
+}
+
+/* Notification */
+.notification {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background-color: rgba(76, 201, 240, 0.9);
+    padding: 15px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+    transform: translateX(200%);
+    transition: transform 0.5s;
+    z-index: 1000;
+}
+
+.notification.show {
+    transform: translateX(0);
+}
+
+/* Cheat Input */
+.cheat-input {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    background-color: rgba(32, 82, 149, 0.6);
+    border: none;
+    border-radius: 5px;
+    color: white;
+}
+
+/* Responsive Design */
+@media (max-width: 600px) {
+    .stats {
+        grid-template-columns: 1fr;
+    }
+    
+    .club-selection {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* General Box Styling */
+.info-box {
+    background-color: rgba(32, 82, 149, 0.6);
+    padding: 15px;
+    margin-bottom: 15px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+}
+
+.info-box h3, .info-box p {
+    margin: 5px 0;
+}
+
+/* Player Stats Styling */
+#playerStats div {
+    margin: 5px 0;
+}
+
+/* Cheat Code Section */
+.cheat-container {
+    display: flex;
+    align-items: center;
+    gap: 10px; /* Space between input and button */
+    margin-top: 15px;
+}
+
+.cheat-input {
+    flex: 1; /* Make the input take up available space */
+    padding: 8px;
+    border: none;
+    border-radius: 5px;
+    background-color: rgba(32, 82, 149, 0.6);
+    color: white;
+}
+
+#applyCheatBtn {
+    padding: 8px 15px;
+    background-color: #4cc9f0;
+    border: none;
+    border-radius: 5px;
+    color: white;
+    cursor: pointer;
+    font-weight: bold;
+    transition: all 0.3s;
+}
+
+#applyCheatBtn:hover {
+    background-color: #205295;
+}
+
+/* Progress Bar Styling */
+.progress-bar {
+    width: 100%;
+    background-color: #e0e0e0;
+    height: 20px;
+    border-radius: 10px;
+    overflow: hidden;
+    margin-top: 5px;
+}
+
+.progress {
+    height: 100%;
+    background-color: #4caf50; /* Green color for progress */
+    transition: width 0.3s;
+}
+
+/* Player Stats Progress Bars */
+.stat-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 10px;
+}
+
+.stat-item span {
+    width: 80px;
+    text-align: left;
+}
+
+.progress-bar {
+    flex: 1;
+    height: 20px;
+    background-color: #e0e0e0;
+    border-radius: 10px;
+    margin: 0 10px;
+    overflow: hidden;
+    position: relative;
+}
+
+.progress {
+    height: 100%;
+    background-color: #4caf50; /* Green color for progress */
+    transition: width 0.3s;
+}
