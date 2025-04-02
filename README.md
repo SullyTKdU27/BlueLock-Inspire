@@ -108,3 +108,9 @@ A football web Sim inspired by Blue Lock
 - Add animations and sound effects for a more immersive experience.
 
 ---
+
+## Current Issues
+
+- Energy Bug, Does not show it being used up
+
+--
